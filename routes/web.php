@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('insert');
 });
+
+Route::post('/store',[MemberController::class, 'store']);
+Route::get('/show',[MemberController::class, 'show']);
+Route::get('/delete/{id}',[MemberController::class, 'destroy']);
+Route::get('/edit/{id}',[MemberController::class, 'edit']);
+Route::post('/update/{id}',[MemberController::class, 'update']);

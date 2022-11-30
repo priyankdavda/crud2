@@ -15,6 +15,7 @@ class MemberController extends Controller
     public function index()
     {
         //
+        return view('insert');
     }
 
     /**
@@ -35,7 +36,11 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $member=new Member;
+        $member->member_name = $request->get('name');
+        $member->member_email = $request->get('email');
+        $member->save();
+        echo "<h3>Data sent successfully...</h3>";
     }
 
     /**
@@ -46,7 +51,8 @@ class MemberController extends Controller
      */
     public function show(Member $member)
     {
-        //
+        $members=Member::all();
+        return view('show',['members'=>$members]);
     }
 
     /**
@@ -55,9 +61,10 @@ class MemberController extends Controller
      * @param  \App\Models\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function edit(Member $member)
+    public function edit(Member $member,$id)
     {
-        //
+        $member=Member::find($id);
+        return view('edit',['members'=>$member]);
     }
 
     /**
@@ -67,9 +74,13 @@ class MemberController extends Controller
      * @param  \App\Models\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Member $member)
+    public function update(Request $request, Member $member,$id)
     {
-        //
+        $member=Member::find($id);
+        $member->member_name=$request->get('name');
+        $member->member_email=$request->get('email');
+        $member->save();
+        return redirect('show');
     }
 
     /**
@@ -78,8 +89,10 @@ class MemberController extends Controller
      * @param  \App\Models\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Member $member)
+    public function destroy(Member $member,$id)
     {
-        //
+        $member=Member::find($id);
+        $member->delete();
+        return redirect('show');
     }
 }
